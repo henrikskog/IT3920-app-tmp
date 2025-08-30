@@ -60,7 +60,7 @@ export function HomePage() {
             onKeyDown={(event) => handleKeyDown(event, "/favorites")}
             tabIndex={0}
           >
-            Favorite Recipes
+            Favorite Recipes :)
           </BoxButton>
           <BoxButton
             data-testid={`Home button Random`}
