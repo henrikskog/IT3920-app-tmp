@@ -15,7 +15,7 @@ class RecipeService {
       "SELECT * FROM recipes"
     );
 
-    console.log(`Retrieved all recipes successfully: `);
+    console.log(`Retrieved ${results.length} recipes successfully: `);
     return results as DisplayRecipe[];
   }
 
