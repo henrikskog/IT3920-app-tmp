@@ -1,5 +1,0 @@
-node_modules
-*bundle.js*
-server.js*
-.env
-stats.json

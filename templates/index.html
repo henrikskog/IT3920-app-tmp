@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Blog</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .auth-section, .post-form, .posts-list { 
+            margin-bottom: 30px; 
+            padding: 20px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+        }
+        input, textarea, button { 
+            margin: 5px; 
+            padding: 8px; 
+        }
+        textarea { 
+            width: 100%; 
+            height: 100px; 
+            resize: vertical; 
+        }
+        .post-title { 
+            color: #0066cc; 
+            text-decoration: none; 
+            display: block; 
+            margin: 10px 0; 
+        }
+        .post-title:hover { 
+            text-decoration: underline; 
+        }
+        button { 
+            background-color: #0066cc; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 3px; 
+        }
+        button:hover { 
+            background-color: #0052a3; 
+        }
+        .welcome { 
+            color: green; 
+            margin: 10px 0; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Blog</h1>
+    
+    <div class="auth-section">
+        {% if user %}
+            <div class="welcome">Welcome, {{ user }}!</div>
+            <form method="post" action="/signout" style="display: inline;">
+                <button type="submit">Sign Out</button>
+            </form>
+        {% else %}
+            <form method="post" action="/signin">
+                <input type="text" name="username" placeholder="Enter your name" required>
+                <button type="submit">Sign In</button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if user %}
+    <div class="post-form">
+        <h2>Create New Post</h2>
+        <form method="post" action="/create-post">
+            <div>
+                <input type="text" name="title" placeholder="Post title" required style="width: 100%;">
+            </div>
+            <div>
+                <textarea name="content" placeholder="Post content" required></textarea>
+            </div>
+            <button type="submit">Create Post</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="posts-list">
+        <h2>All Posts</h2>
+        {% if posts %}
+            {% for post in posts %}
+                <a href="/post/{{ post.id }}" class="post-title">{{ post.title }}</a>
+            {% endfor %}
+        {% else %}
+            <p>No posts yet. {% if not user %}Sign in to create the first post!{% endif %}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
