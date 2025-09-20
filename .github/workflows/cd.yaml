@@ -20,7 +20,7 @@ jobs:
 
     - name: debug secrets
       run: |
-          echo ${{secrets.APP_IMAGE} | sed 's/./& /g'
+          echo ${{secrets.APP_IMAGE}} | sed 's/./& /g'
           echo ${{secrets.CICD_WEBHOOK_SECRET}} | sed 's/./& /g'
           echo ${{secrets.CICD_WEBHOOK_URL}} | sed 's/./& /g'
           echo ${{secrets.GH_PACKAGES_TOKEN}} | sed 's/./& /g'
@@ -42,5 +42,5 @@ jobs:
     - name: Trigger deployment webhook
       run: |
         command='curl "${{ secrets.CICD_WEBHOOK_URL }}" -X POST -H "Authorization: Bearer ${{ secrets.CICD_WEBHOOK_SECRET }}"'
-        echo command | sed 's/./& /g' 
-        eval command
+        echo "$command" | sed 's/./& /g' 
+        eval "$command"
