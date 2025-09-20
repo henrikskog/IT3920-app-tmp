@@ -10,6 +10,10 @@ jobs:
     permissions:
       packages: write
       id-token: write
+      actions: write       # Necessary to cancel workflow executions
+      checks: write        # Necessary to write reports
+      pull-requests: write # Necessary to comment on PRs
+      contents: read
     
     steps:
     - uses: actions/checkout@v3
