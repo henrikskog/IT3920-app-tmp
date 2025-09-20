@@ -41,5 +41,5 @@ jobs:
     - name: Trigger deployment webhook
       run: |
         curl -X POST "${{ secrets.CICD_WEBHOOK_URL }}" \
-          -H "Authorization: Bearer ${{ secrets.WEBHOOK_SECRET }}" \
+          -H "Authorization: Bearer ${{ secrets.CICD_WEBHOOK_SECRET }}" \
           -H "Content-Type: application/json"
