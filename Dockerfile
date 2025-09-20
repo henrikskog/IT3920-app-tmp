@@ -3,12 +3,12 @@ FROM python:3.12-slim
 # Install uv.
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Copy the application into the container.
-COPY . /app
-
-# Install the application dependencies.
+COPY pyproject.toml uv.lock /app/
 WORKDIR /app
-RUN uv sync --frozen --no-cache
+RUN uv sync --frozen --no-cache  # Cached unless dependencies change
+
+# Copy source code last so you dont have to rerun uv sync 
+COPY . /app
 
 # Run the application.
 CMD ["/app/.venv/bin/fastapi", "run", "app/main.py", "--port", "80", "--host", "0.0.0.0"]
